@@ -7,7 +7,7 @@
 // Last Modification Date:	09/10/2023
 // Author1 and ID and Group:	Menna Ahmed - 20221163
 // Author2 and ID and Group:	Haidy Ehab -  20221191
-// Author3 and ID and Group:	Mohamed Anas - 20220323
+// Author3 and ID and Group:	Mahmoud Anas - 20220323
 #include <iostream>
 using namespace std;
 #include "bmplib.h"
@@ -112,7 +112,7 @@ int main() {
     }
     void Merge () {
         string Merge_Image, path = "\\imgs\\";
-        cout << "Please Enter Image Name From Image Folder (Add .bmp at The End of Image Name)" << endl;
+        cout << "Please Enter The Name of Image You Want To Merge From Image Folder (Add .bmp at The End of Image Name)" << endl;
         cin >> Merge_Image;
         path += Merge_Image;
         char cwd[PATH_MAX];
