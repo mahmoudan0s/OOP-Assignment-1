@@ -1,5 +1,9 @@
 // FCAI – OOP Programming – 2023 - Assignment 1
 // Program Name: Asignment.cpp
+// Purpose: Demonstrate using of bmplip for handling
+//          bmp grayscale images
+//          Program loads a gray image and stores it in another file
+//          Making changes to images
 // Last Modification Date:	09/10/2023
 // Author1 and ID and Group:	Menna Ahmed - 20221163
 // Author2 and ID and Group:	Haidy Ehab -  20221191
@@ -8,7 +12,6 @@
 using namespace std;
 #include "bmplib.h"
 #include <unistd.h>
-#include <fstream>
 #include <cstring>
 unsigned char imgGs[SIZE][SIZE];
 unsigned char imgGs2[SIZE][SIZE];
@@ -44,8 +47,8 @@ int main() {
         string filters[] = {"1.Black and White", "2.Invert", "3.Merge", "4.Flip", "5.Rotate",
                             "6.Darken and Lighten"};
         cout << "Please Choose The Filter You Want" << endl;
-        for (int i = 0; i < 6; i++) {
-            cout << filters[i] << endl;
+        for (const auto & filter : filters) {
+            cout << filter << endl;
         }
         int choice;
         cin >> choice;
@@ -101,9 +104,9 @@ int main() {
     void Black_and_White(){
     }
     void Invert () {
-        for ( int i = 0; i < SIZE; i++){
-            for ( int j  = 0; j < SIZE; j++) {
-                imgGs[i][j] = 255 - imgGs[i][j];
+        for (auto & imgG : imgGs){
+            for (unsigned char & j : imgG) {
+                j = 255 - j;
             }
         }
     }
@@ -178,20 +181,20 @@ int main() {
         if (choice2 == "1") {
             int MaxPixelValue = 255;
             int NewPixelValue;
-            for (int i = 0; i < SIZE; i++) {
-                for (int j = 0; j < SIZE; j++) {
-                    NewPixelValue = imgGs[i][j] + MaxPixelValue * 0.5;
+            for (auto & imgG : imgGs) {
+                for (unsigned char & j : imgG) {
+                    NewPixelValue = j + MaxPixelValue * 0.5;
                     if (NewPixelValue > MaxPixelValue) {
                         NewPixelValue = MaxPixelValue;
                     }
-                    imgGs[i][j] = NewPixelValue;
+                    j = NewPixelValue;
                 }
             }
         }
         else if (choice2 == "2") {
-            for (int i = 0; i < SIZE; i++) {
-                for (int j = 0; j < SIZE; j++) {
-                    imgGs[i][j] = imgGs[i][j] / 2;
+            for (auto & imgG : imgGs) {
+                for (unsigned char & j : imgG) {
+                    j = j / 2;
                 }
             }
         }
