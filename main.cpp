@@ -70,7 +70,7 @@ int main() {
                 Darken_and_Lighten();
                 break;
             default:
-                cout << "Invalid Choice,Please Choose Suitable Choice" << endl;
+                cout << "Invalid Choice, Please Choose Suitable Choice" << endl;
                 Filters();
         }
     }
@@ -176,7 +176,7 @@ int main() {
 }
     void Darken_and_Lighten() {
         string choice2;
-        cout << "Want You The Image Lighten or Darken ? ( 1.Light / 2.Dark )" << endl;
+        cout << "Do You Want The Image Lightened or Darkened ? ( 1.Light / 2.Dark )" << endl;
         cin >> choice2;
         if (choice2 == "1") {
             int MaxPixelValue = 255;
@@ -199,7 +199,7 @@ int main() {
             }
         }
         else {
-            cout << "Invalid Choice" << endl;
+            cout << "Invalid Choice, Please Choose Suitable Choice" << endl;
             Darken_and_Lighten();
         }
     }
