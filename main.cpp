@@ -126,30 +126,45 @@ int main() {
     int choice3;
     cout << "Please Enter The Rotating Degree (90,180,270)" << endl;
     cin >> choice3;
-        switch (choice3){
+        switch (choice3) {
             case 90:
-                for (int i = 0; i < SIZE; i++) {
-                    for (int j = 0; j < SIZE/2; j++) {
-                        swap(imgGs[i][j],imgGs[i][SIZE-1-j]);
+                // Traverse each cycle
+                for (int i = 0; i < SIZE / 2; i++) {
+                    for (int j = i; j < SIZE - i - 1; j++) {
+                        // Swap elements of each cycle
+                        // in clockwise direction
+                        int temp = imgGs[i][j];
+                        imgGs[i][j] = imgGs[SIZE - 1 - j][i];
+                        imgGs[SIZE - 1 - j][i] = imgGs[SIZE - 1 - i][SIZE - 1 - j];
+                        imgGs[SIZE - 1 - i][SIZE - 1 - j] = imgGs[j][SIZE - 1 - i];
+                        imgGs[j][SIZE - 1 - i] = temp;
                     }
                 }
                 break;
             case 180:
-                for (int i = SIZE - 1; i >= 0; i--) {
-                    for (int j = SIZE - 1; j >= 0; j--){
-                        imgGs[i][j] = imgGs[i][j];
+                for (int i = 0; i < SIZE; i++) {
+                    for (int j = 0, k = SIZE - 1; j < k; j++, k--) {
+                        swap(imgGs[j][i], imgGs[k][i]);
                     }
                 }
-                showGSBMP(imgGs);
                 break;
             case 270:
-                for (int i = 0; i < SIZE; i++) {
-                    for (int j = 0; j < SIZE; j++) {
-                        imgGs[j][SIZE - i - 1] = imgGs[i][j];
-
+                for (int i = 0; i < SIZE / 2; i++) {
+                    for (int j = i; j < SIZE - i - 1; j++) {
+                        // Swap elements of each cycle
+                        // in clockwise direction
+                        int temp = imgGs[i][j];
+                        imgGs[i][j] = imgGs[SIZE - 1 - j][i];
+                        imgGs[SIZE - 1 - j][i] = imgGs[SIZE - 1 - i][SIZE - 1 - j];
+                        imgGs[SIZE - 1 - i][SIZE - 1 - j] = imgGs[j][SIZE - 1 - i];
+                        imgGs[j][SIZE - 1 - i] = temp;
                     }
                 }
-                showGSBMP(imgGs);
+                for (int i = 0; i < SIZE; i++) {
+                    for (int j = 0, k = SIZE - 1; j < k; j++, k--) {
+                        swap(imgGs[j][i], imgGs[k][i]);
+                    }
+                }
                 break;
             default:
         cout << "Invalid Choice, Please Choose Suitable Choice" << endl;
