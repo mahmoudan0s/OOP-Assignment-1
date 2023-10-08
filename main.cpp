@@ -5,10 +5,9 @@
 //          Program loads a gray image and stores it in another file
 //          Making changes to images
 // Last Modification Date:	09/10/2023
-// Author1 and ID :	Menna Ahmed - 20221163
-// Author2 and ID :	Haidy Ehab -  20221191
-// Author3 and ID :	Mahmoud Mustafa Anas - 20220323
-
+// Author1 and ID and Group:	Menna Ahmed - 20221163
+// Author2 and ID and Group:	Haidy Ehab -  20221191
+// Author3 and ID and Group:	Mahmoud Mustafa Anas - 20220323
 #include<bits/stdc++.h>
 using namespace std;
 #include "bmplib.h"
@@ -17,99 +16,101 @@ unsigned char imgGs[SIZE][SIZE];
 unsigned char imgGs2[SIZE][SIZE];
 unsigned char imgGs3[SIZE][SIZE];
 
-
-
 void loadImage();
-void filters();
-void another_Process();
+void Filters();
+void Another_Process();
 void saveImage();
-void black_and_white();
-void invert();
-void merge ();
-void flip();
-void rotate();
-void darken_and_lighten();
-void enlarge();
-void shrink();
+void Black_and_White();
+void Invert();
+void Merge ();
+void Flip();
+void Rotate();
+void Darken_and_Lighten();
+//void enlarge();
+//void shrink();
+void Mirror_Image();
 
 int main() {
     loadImage();
-    filters();
+    Filters();
     saveImage();
-    another_Process();
+    Another_Process();
     return 0;
 }
 void loadImage () {
-    string image_name, path = "\\imgs\\";
+    string Image_Name, path = "\\imgs\\";
     cout << "Please Enter Image Name From Image Folder (Add .bmp at The End of Image Name)" << endl;
-    cin >> image_name;
-    path += image_name;
+    cin >> Image_Name;
+    path += Image_Name;
     char cwd[PATH_MAX];
     readGSBMP(strcat(getcwd(cwd, sizeof(cwd)), path.c_str()), imgGs);
 }
-void filters(){
-    string choices[] = {"1.Black and White", "2.Invert", "3.Merge", "4.Flip", "5.Rotate",
-                        "6.Darken and Lighten","8.Enlarge","9.Shrink"};
+void Filters(){
+    string filters[] = {"1.Black and White", "2.Invert", "3.Merge", "4.Flip", "5.Rotate",
+                        "6.Darken and Lighten","8.Enlarge","9.Shrink","a.Mirror Image"};
     cout << "Please Choose The Filter You Want" << endl;
-    for (const auto & filter : choices) {
+    for (const auto & filter : filters) {
         cout << filter << endl;
     }
-    int choice;
+    char choice;
     cin >> choice;
     switch (choice) {
-        case 1:
-            black_and_white();
+        case '1':
+            Black_and_White();
             break;
-        case 2:
-            invert();
+        case '2':
+            Invert();
             break;
-        case 3:
-            merge();
+        case '3':
+            Merge();
             break;
-        case 4:
-            flip();
+        case '4':
+            Flip();
             break;
-        case 5:
-            rotate();
+        case '5':
+            Rotate();
             break;
-        case 6:
-            darken_and_lighten();
+        case '6':
+            Darken_and_Lighten();
             break;
-        case 9:
-            shrink();
+//        case 9:
+//            shrink();
+        case 'a':
+            Mirror_Image();
+            break;
         default:
             cout << "Invalid Choice, Please Choose Suitable Choice" << endl;
-            filters();
+            Filters();
     }
 }
 void saveImage () {
     char imageFileName[100];
-    cout << "Please Enter Target Image Name";
+    cout << "Please Enter Target Image Name"<<endl;
     cin >> imageFileName;
     strcat (imageFileName, ".bmp");
     writeGSBMP(imageFileName, imgGs);
     cout << "Image Is Saved In Folder" << endl;
 }
-void another_Process(){
+void Another_Process(){
     cout << "Do You Want To Make Another Process (1.Yes/ 2.No)" << endl;
     int choice4;
     cin >> choice4;
     switch (choice4) {
         case 1:
             loadImage();
-            filters();
+            Filters();
             saveImage();
-            another_Process();
+            Another_Process();
             break;
         case 2:
             cout << "Thank You" << endl;
             break;
         default:
             cout << "Invalid Choice, Please Choose Suitable Choice" << endl;
-            another_Process();
+            Another_Process();
     }
 }
-void black_and_white(){
+void Black_and_White(){
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             if (imgGs[i][j]>127)
@@ -119,18 +120,18 @@ void black_and_white(){
         }
     }
 }
-void invert () {
+void Invert () {
     for (auto & imgG : imgGs){
         for (unsigned char & j : imgG) {
             j = 255 - j;
         }
     }
 }
-void merge () {
-    string merge_image, path = "\\imgs\\";
+void Merge () {
+    string Merge_Image, path = "\\imgs\\";
     cout << "Please Enter The Name of Image You Want To Merge From Image Folder (Add .bmp at The End of Image Name)" << endl;
-    cin >> merge_image;
-    path += merge_image;
+    cin >> Merge_Image;
+    path += Merge_Image;
     char cwd[PATH_MAX];
     readGSBMP(strcat(getcwd(cwd, sizeof(cwd)), path.c_str()), imgGs2);
     for (int i = 0; i < SIZE; i++) {
@@ -139,41 +140,41 @@ void merge () {
         }
     }
 }
-void flip(){
-    cout<<"Do You Want to Flip The Image Horizontally or Vertically?( 1.Horizontally / 2.Vertically )"<< endl;
+void Flip(){
+    cout<<"flip the image horizontally or vertically?( 1.horizontally / 2.vertically )"<<endl;
     int type;
-    cin >> type;
+    cin>>type;
     if (type == 1) {
-        for (int i = 0; i < 255; i++) {
+    for (int i = 0; i < 256; i++) {
             for (int j = 0; j < 127; j++) {
-                swap(imgGs[i][j],imgGs[i][255-1-j]);
+                swap(imgGs[i][j],imgGs[i][SIZE-1-j]);
             }
         }
+
     }
-    else if (type == 2){
+    else if(type==2){
         for (int i = 0; i < 127; i++) {
-            for (int j = 0; j < 255; j++) {
-                swap(imgGs[i][j],imgGs[255-1-i][j]);
+            for (int j = 0; j < 256; j++) {
+                swap(imgGs[i][j],imgGs[SIZE-1-i][j]);
             }
         }
     }
     else {
         cout << "Invalid Choice, Please Choose Suitable Choice" << endl;
-        flip();
+        Flip();
     }
 }
 
-void rotate(){
+void Rotate(){
     int choice3;
     cout << "Please Enter The Rotating Degree (90,180,270)" << endl;
     cin >> choice3;
     switch (choice3) {
         case 90:
-            // Rotating image by 90 degrees in clock-wise direction
-            // Looping at all pixels one by one
+            // Traverse each cycle
             for (int i = 0; i < SIZE / 2; i++) {
                 for (int j = i; j < SIZE - i - 1; j++) {
-                    // Swap pixels of each cycle
+                    // Swap elements of each cycle
                     // in clockwise direction
                     int temp = imgGs[i][j];
                     imgGs[i][j] = imgGs[SIZE - 1 - j][i];
@@ -184,51 +185,49 @@ void rotate(){
             }
             break;
         case 180:
-            for (int i = 0; i < SIZE / 2; i++) {
-                for (int j = 0; j < SIZE; j++) {
-                    swap(imgGs[i][j], imgGs[SIZE - i - 1][SIZE - j - 1]);
+            for (int i = 0; i < SIZE; i++) {
+                for (int j = 0, k = SIZE - 1; j < k; j++, k--) {
+                    swap(imgGs[j][i], imgGs[k][i]);
                 }
             }
             break;
         case 270:
-            // To rotate image by 270 degrees
-            // we simply can rotate it by 90 degrees in anti-clockwise direction
-            // Looping at all pixels one by one
             for (int i = 0; i < SIZE / 2; i++) {
                 for (int j = i; j < SIZE - i - 1; j++) {
-                    // Store current pixel in
-                    // temp variable
+                    // Swap elements of each cycle
+                    // in clockwise direction
                     int temp = imgGs[i][j];
-                    // Move pixels from right to top
-                    imgGs[i][j] = imgGs[j][SIZE - 1 - i];
-                    // Move pixels from bottom to right
-                    imgGs[j][SIZE - 1 - i] = imgGs[SIZE - 1 - i][SIZE - 1 - j];
-                    // Move pixels from left to bottom
-                    imgGs[SIZE - 1 - i][SIZE - 1 - j] = imgGs[SIZE - 1 - j][i];
-                    // Assign temp to left
-                    imgGs[SIZE - 1 - j][i] = temp;
+                    imgGs[i][j] = imgGs[SIZE - 1 - j][i];
+                    imgGs[SIZE - 1 - j][i] = imgGs[SIZE - 1 - i][SIZE - 1 - j];
+                    imgGs[SIZE - 1 - i][SIZE - 1 - j] = imgGs[j][SIZE - 1 - i];
+                    imgGs[j][SIZE - 1 - i] = temp;
+                }
+            }
+            for (int i = 0; i < SIZE; i++) {
+                for (int j = 0, k = SIZE - 1; j < k; j++, k--) {
+                    swap(imgGs[j][i], imgGs[k][i]);
                 }
             }
             break;
         default:
             cout << "Invalid Choice, Please Choose Suitable Choice" << endl;
-            rotate();
+            Rotate();
     }
 }
-void darken_and_lighten() {
+void Darken_and_Lighten() {
     string choice2;
     cout << "Do You Want The Image Lightened or Darkened ? ( 1.Light / 2.Dark )" << endl;
     cin >> choice2;
     if (choice2 == "1") {
-        int maxPixelValue = 255;
-        int newPixelValue;
+        int MaxPixelValue = 255;
+        int NewPixelValue;
         for (auto & imgG : imgGs) {
             for (unsigned char & j : imgG) {
-                newPixelValue = j + maxPixelValue * 0.5;
-                if (newPixelValue > maxPixelValue) {
-                    newPixelValue = maxPixelValue;
+                NewPixelValue = j + MaxPixelValue * 0.5;
+                if (NewPixelValue > MaxPixelValue) {
+                    NewPixelValue = MaxPixelValue;
                 }
-                j = newPixelValue;
+                j = NewPixelValue;
             }
         }
     }
@@ -241,6 +240,46 @@ void darken_and_lighten() {
     }
     else {
         cout << "Invalid Choice, Please Choose Suitable Choice" << endl;
-        darken_and_lighten();
+        Darken_and_Lighten();
+    }
+
+}
+void Mirror_Image(){
+    cout<<"mirror the Left 1/2 or Right 1/2 or Upper 1/2 or Lower 1/2 of the image?( 1.Left / 2.Right / 3.Upper / 4.Lower )"<<endl;
+    int type2;
+    cin>>type2;
+    switch (type2) {
+        case 1:
+            for (int i = 0; i <SIZE; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    imgGs[i][SIZE-j]=imgGs[i][j];
+                }
+            }
+            break;
+        case 2:
+            for (int i = 0; i <SIZE; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    imgGs[i][j]=imgGs[i][SIZE-j];
+                }
+            }
+            break;
+
+        case 3:
+            for (int i = 0; i <SIZE; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    imgGs[SIZE-i][j]=imgGs[i][j];
+                }
+            }
+            break;
+        case 4:
+            for (int i = 0; i <SIZE; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    imgGs[i][j]=imgGs[SIZE-i][j];
+                }
+            }
+            break;
+        default:
+            cout << "Invalid Choice, Please Choose Suitable Choice" << endl;
+            Mirror_Image();
     }
 }
